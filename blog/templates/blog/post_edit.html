@@ -1,9 +1,91 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
-    <h2>New post</h2>
+ 
+    <div class="form-header">
+        <span class="form-eyebrow">✦ Redactar</span>
+        <h2>New post</h2>
+        <p class="form-subtitle">Comparte tus ideas con el mundo</p>
+    </div>
+ 
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        <button type="submit" class="save btn btn-default">Save ✿</button>
     </form>
+ 
+    <style>
+        .form-eyebrow {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d4a96a;
+            font-weight: 500;
+            display: block;
+        }
+        .form-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            color: #7a3550;
+            margin: 6px 0 4px;
+        }
+        .form-subtitle {
+            font-size: 13px;
+            color: #b8849a;
+            margin: 0 0 24px;
+        }
+ 
+        /* inputs que genera form.as_p */
+        .post-form p { margin-bottom: 18px; }
+ 
+        .post-form label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #7a3550;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .post-form input[type="text"],
+        .post-form textarea {
+            width: 100%;
+            border: 1.5px solid #f0c8d0;
+            border-radius: 12px;
+            padding: 11px 15px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: #3d2535;
+            background: #fff9f7;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            resize: vertical;
+        }
+        .post-form input[type="text"]:focus,
+        .post-form textarea:focus {
+            border-color: #c97a90;
+            box-shadow: 0 0 0 3px rgba(201, 122, 144, 0.15);
+            background: #fff;
+        }
+        .post-form textarea { min-height: 180px; }
+ 
+        /* botón Save */
+        .post-form .save {
+            background: linear-gradient(135deg, #d47a93, #8e3d5e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 34px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 18px rgba(142, 61, 94, 0.3);
+            margin-top: 8px;
+        }
+        .post-form .save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(142, 61, 94, 0.4);
+        }
+    </style>
+ 
 {% endblock %}

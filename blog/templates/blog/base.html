@@ -4,18 +4,168 @@
         <title>Django Girls blog</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <style>
+            :root {
+                --rose:      #c97a90;
+                --blush:     #f7d6d9;
+                --plum:      #7a3550;
+                --champagne: #fdf6f0;
+                --gold:      #d4a96a;
+                --cream:     #fff9f7;
+                --text:      #3d2535;
+            }
+ 
+            body {
+                background-color: var(--champagne);
+                background-image:
+                    radial-gradient(ellipse at 5% 0%, #fce8ee 0%, transparent 50%),
+                    radial-gradient(ellipse at 95% 100%, #f5e0f0 0%, transparent 50%);
+                font-family: 'DM Sans', sans-serif;
+                color: var(--text);
+            }
+ 
+            .page-header {
+                background: linear-gradient(135deg, #d47a93 0%, #b85c78 50%, #8e3d5e 100%);
+                padding: 28px 36px 24px;
+                margin-bottom: 40px;
+                border-radius: 0 0 32px 32px;
+                box-shadow: 0 8px 32px rgba(142, 61, 94, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+            .page-header::before {
+                content: '';
+                position: absolute;
+                width: 260px; height: 260px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.08);
+                top: -90px; right: -60px;
+                pointer-events: none;
+            }
+            .page-header::after {
+                content: '';
+                position: absolute;
+                width: 140px; height: 140px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.06);
+                bottom: -50px; left: 40px;
+                pointer-events: none;
+            }
+            .page-header h1 {
+                margin: 0;
+                position: relative;
+                z-index: 1;
+            }
+            .page-header h1 a {
+                font-family: 'Playfair Display', serif;
+                font-size: 38px;
+                font-weight: 700;
+                color: #fff;
+                text-decoration: none;
+                text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+                letter-spacing: -0.3px;
+            }
+            .page-header h1 a:hover { opacity: 0.85; }
+ 
+            .top-menu {
+                position: relative;
+                z-index: 1;
+                float: right;
+                background: rgba(255,255,255,0.2);
+                border: 1.5px solid rgba(255,255,255,0.45);
+                color: white;
+                width: 40px; height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                margin-top: 6px;
+                transition: all 0.25s;
+            }
+            .top-menu:hover {
+                background: white;
+                color: var(--plum);
+                text-decoration: none;
+                transform: scale(1.08);
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            }
+ 
+            .content { margin-top: 0; }
+ 
+            .post {
+                background: var(--cream);
+                border-radius: 20px;
+                border: 1px solid rgba(212, 169, 106, 0.2);
+                box-shadow: 0 2px 0 rgba(212,169,106,0.12), 0 6px 30px rgba(142, 61, 94, 0.08);
+                padding: 28px 32px;
+                margin-bottom: 24px;
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .post:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 2px 0 rgba(212,169,106,0.18), 0 12px 40px rgba(142, 61, 94, 0.13);
+            }
+            .post::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, var(--blush), var(--gold), var(--rose), var(--blush));
+                background-size: 200% 100%;
+                animation: shimmer 4s infinite linear;
+            }
+            .post::after {
+                content: '✿';
+                position: absolute;
+                bottom: 12px; right: 16px;
+                font-size: 28px;
+                color: var(--blush);
+                pointer-events: none;
+            }
+ 
+            @keyframes shimmer {
+                0%   { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+            }
+ 
+            h1, h2, h3, h4 {
+                font-family: 'Playfair Display', serif;
+                color: var(--plum);
+            }
+ 
+            a { color: var(--rose); }
+            a:hover { color: var(--plum); }
+ 
+            .post h2 a {
+                font-size: 22px;
+                text-decoration: none;
+            }
+ 
+            .date {
+                font-size: 12px;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                color: var(--gold);
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+        </style>
     </head>
     <body>
         <div class="page-header">
-            
             {% if user.is_authenticated %}
-            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            <a href="{% url 'post_new' %}" class="top-menu">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
             {% endif %}
-            
             <h1><a href="/">Django Girls Blog</a></h1>
         </div>
+ 
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
